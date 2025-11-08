@@ -3,14 +3,14 @@
 #include <iostream>
 
 int main() {
-    Ntree<string> myTree(1);
-    myTree.insertUnder("hello");
-    myTree.insertUnder("world", "hello");
-    myTree.insertUnder("why", "hello");
-    vector<string> myVector = myTree.findChildren("why");
-    for(string child : myVector) {
-        cout << child << endl;
-    }
-    cout << myTree.exists("why") << endl;
+    Ntree<string> myTree;
+    myTree.insertUnder("first Node", "world", "action");
+    myTree.insertUnder("second Node", "world", "action");
+    cout << myTree.exists("third Node", "action") << endl;
+    cout << myTree.findData("second Node", "action") << endl;
+    Map<string> myMap;
+    myMap.insert("hello", "world");
+    myMap.find("hello");
+    myMap.find("wassup");
     return 0;
 }

@@ -5,6 +5,7 @@ using namespace std;
 template<typename Value>
 class Map {
     RedBlackTree<Value> tree;
+    Value garbage;
 
     public:
     Map() {}
@@ -25,9 +26,10 @@ class Map {
         return tree.isEmpty();
     }
 
-    string at(string key) {
+    Value find(string key) {
         if(tree.findNode(key) == nullptr) {
-            return "NULL";
+            cout << "Node not found" << endl;
+            return garbage;
         }
         else {
             return tree.findNode(key)->value;

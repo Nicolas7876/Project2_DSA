@@ -1,44 +1,51 @@
 #pragma once
 #include <vector>
 #include <iostream>
+#include <string>
 using namespace std;
 
-template<typename Data>
+template<typename T>
 class Ntree {
-    int n;
     
     struct Node {
-        Data data;
+        string key;
+        T value;
         vector<Node*> children;
-        int connections;
 
-        Node(Data data_) {
-            data = data_;
-            connections = 0;
+        Node(string key_, T value_) {
+            key = key_;
+            value = value_;
+        }
+
+        Node(string key_) {
+            key = key_;
         }
     };
 
     Node* root;
-    //Public Access functions
-    void insertHelper(Data data_, Data info, Node* node) {
-        Node* myNode = new Node(data_);
-        if(root == nullptr) {
-            root = myNode;
-            cout << "Inserted Root" << endl;
-            return;
+
+    void insertHelper(string key, T value, string genre) {
+        Node* myNode;
+        bool foundGenre = false;
+        for(Node* child : root->children) {
+            if(child->key == genre) {
+                foundGenre = true;
+                myNode = child;
+            }
         }
-        if(node->connections >= n) {
-            cout << "Node Full" << endl;
-            return;
-        }
-        if(node->data == info) {
-            node->children.push_back(myNode);
-            node->connections += 1;
-            cout << "Inserted" << endl;
+        if(foundGenre == false) {
+            Node* tempNode1 = new Node(genre, value);
+            root->children.push_back(tempNode1);
+            cout << "Added " << genre << " genre" << endl;
+            Node* tempNode2 = new Node(key, value);
+            tempNode1->children.push_back(tempNode2);
+            cout << "Added " << key << " to " << genre << " genre" << endl;
             return;
         }
         else {
-            cout << "Not inserted" << endl;
+            Node* tempNode = new Node(key, value);
+            myNode->children.push_back(tempNode);
+            cout << "Added " << key << " to " << genre << " genre" << endl;
             return;
         }
     }
@@ -51,60 +58,64 @@ class Ntree {
             node = nullptr;
         }
     }
-
-    Node* findNode(Data key, Node* node) {
+    // 
+    Node* findNode(string key, string genre, Node* node) {
         Node* myNode;
-        if(node == nullptr) {
+        bool foundGenre = false;
+        for(Node* child : node->children) {
+            if (child->key == genre) {
+                foundGenre = true;
+                myNode = child;
+                continue;
+            }
+        }
+        if(!foundGenre) {
             return nullptr;
         }
-        if(node->data == key) {
-            return node;
-        }
-        else {
-            for(Node* child : node->children) {
-                myNode = findNode(key, child);
-                if (myNode != nullptr) {
-                    return myNode;
-                }
+        for(Node* child : myNode->children) {
+            if(child->key == key) {
+                return child;
             }
         }
         return nullptr;
     }
 
+    //Public Access functions
     public:
-    Ntree(int data) {
-        n = data;
-        root = nullptr;
+    Ntree() {
+        root = new Node("root");
     }
 
-    void insertUnder(Data data_, Data info = "N/A") {
-        insertHelper(data_, info, root);
+    void insertUnder(string key, T value, string genre) {
+        insertHelper(key, value, genre);
     }
 
-    bool exists(Data data) {
-        Node* myNode = findNode(data, root);
+    bool exists(string key, string genre) {
+        Node* myNode = findNode(key, genre, root);
         if(myNode == nullptr) {
-            cout << "Node Not found" << endl;
             return false;
         }
-        else {
-            return true;
-        }
+        return true;
     }
 
-    vector<Data> findChildren(Data data) {
-        Node* myNode = findNode(data, root);
-        vector<Data> myData;
+    vector<string> findChildren(string genre) {
+        vector<string> myVector = {};
+        for(Node* child : root->children) {
+            if(child->key == genre) {
+                for(Node* game : child->children) {
+                    myVector.push_back(game->key);
+                }
+            }
+        }
+        return myVector;
+    }
+    
+    T& findData(string key, string genre) {
+        Node* myNode = findNode(key, genre, root);
         if(myNode == nullptr) {
-            cout << "Node Not Found" << endl;
-            return {};
+            cout << "Node not found" << endl;
+            return root->value;
         }
-        for(Node* child : myNode->children) {
-            myData.push_back(child->data);
-        } 
-        if(myData == vector<Data> {}) {
-            cout << "No Children" << endl;
-        }
-        return myData;
+        return myNode->value;
     }
 };
