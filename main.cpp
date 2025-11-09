@@ -19,7 +19,26 @@ struct Game {
     vector<string> genreList;
 
     void convertGenres() {
-        
+        vector<string> genres;
+        string genre = "";
+        bool inQuote = false;
+        for (char c : this->genres) {
+            if (c == '[' || c == ']' || c == ',' || c == '\n' || (!inQuote && c == ' ')) {
+                continue;
+            }
+            if (c == '\'' && inQuote == true) {
+                inQuote = false;
+                this->genreList.push_back(genre);
+                genre = "";
+                continue;
+            }
+            if (c == '\'') {
+                inQuote = !inQuote;
+                continue;
+            }
+
+            genre += c;
+        }
     }
 };
 
@@ -70,7 +89,7 @@ int main(){ //test main with altered data file
         game.overall_player_rating = dataPoints[6];
         game.number_of_reviews_from_purchased_people = dataPoints[7];
         game.link = dataPoints[8];
-
+        game.convertGenres();
         games.push_back(game);
         line = "";
     }
@@ -130,14 +149,17 @@ int main(){ //test main with altered data file
     // cout << games[0].short_description << endl;
 
 
-    //test rankings
-    // for (int i = 0; i < games.size(); i++) {
-    //     if (games[i].rank_info.size() != 0) {
-    //         for (int j = 0; j < games[i].rank_info.size(); j++) {
-    //             cout << "Name: " << games[i].name << " || Rank Info: " << games[i].rank_info[j][2] << " in " << games[i].rank_info[j][1] << " for " << games[i].rank_info[j][0] << endl;
-    //         }
-    //     }
-    // }
+    // test rankings
+    // int numlines = 0;
+    //  for (int i = 0; i < games.size(); i++) {
+    //      if (games[i].rank_info.size() != 0) {
+    //          for (int j = 0; j < games[i].rank_info.size(); j++) {
+    //              cout << "Name: " << games[i].name << " || Rank Info: " << games[i].rank_info[j][2] << " in " << games[i].rank_info[j][1] << " for " << games[i].rank_info[j][0] << endl;
+    //              numlines++;
+    //          }
+    //      }
+    //  }
+    // cout << numlines << endl;
 
     //test reviews
     // for (int i = 0; i < 5; i++) {
@@ -145,5 +167,11 @@ int main(){ //test main with altered data file
     //         cout << "Game Name: " << games[i].name << ", Review: " << games[i].reviews[j] << endl;
     //     }
     // }
+
+    //genre test
+//     cout << games[0].genres << endl;
+//     for (string genre : games[0].genreList) {
+//         cout << genre << endl;
+//     }
     return 0;
 }
