@@ -145,7 +145,6 @@ int main(){ //test main with altered data file
     
     Ntree<Game> myTree;
     for(Game game : games) {
-        game.convertGenres();
         for(string genre : game.genreList) {
             myTree.insertUnder(game.name, game, genre);
         }
