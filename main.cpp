@@ -1,5 +1,5 @@
-#include "map.h"
-#include "N_ary_tree.h"
+#include "./Data Structures/map.h"
+#include "./Data Structures/N_ary_tree.h"
 #include <iostream>
 #include <string>
 #include <fstream>
@@ -16,6 +16,11 @@ struct Game {
     string link;
     vector<vector<string>> rank_info;
     vector<string> reviews;
+    vector<string> genreList;
+
+    void convertGenres() {
+        
+    }
 };
 
 vector<string> readCSVLine(string line) {   //takes in a line, goes char by char to find commas, separates
@@ -44,7 +49,7 @@ int main(){ //test main with altered data file
 
     ifstream file("resources/data/games_descriptiontest.csv");  //change this file-path when you do testing
     if (!file.is_open()) {
-        cerr << "File could not be opened" << endl;
+        cerr << "File1 could not be opened" << endl;
         return 1;
     }
     string line;
@@ -73,7 +78,7 @@ int main(){ //test main with altered data file
 
     ifstream file2("resources/data/ranks.csv"); //this compiles rank info into class objects
     if (!file2.is_open()) {
-        cerr << "File could not be opened" << endl;
+        cerr << "File2 could not be opened" << endl;
         return 1;
     }
     line = "";
@@ -100,7 +105,7 @@ int main(){ //test main with altered data file
 
     ifstream file3("resources/data/reviews.csv");
     if (!file3.is_open()) {
-        cerr << "File could not be opened" << endl;
+        cerr << "File3 could not be opened" << endl;
         return 1;
     }
     line = "";
@@ -118,8 +123,7 @@ int main(){ //test main with altered data file
         }
     }
     file3.close();
-
-
+    
     //test game names
     // cout << "Number of Games: " << games.size() << endl;
     // cout << "First 5 Games:" << endl;
