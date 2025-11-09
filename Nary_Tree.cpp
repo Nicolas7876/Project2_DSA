@@ -143,6 +143,14 @@ int main(){ //test main with altered data file
     }
     file3.close();
     
+    Ntree<Game> myTree;
+    for(Game game : games) {
+        game.convertGenres();
+        for(string genre : game.genreList) {
+            myTree.insertUnder(game.name, game, genre);
+        }
+    }
+
     //test game names
     // cout << "Number of Games: " << games.size() << endl;
     // cout << "First 5 Games:" << endl;
