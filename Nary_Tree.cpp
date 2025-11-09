@@ -145,41 +145,10 @@ int main(){ //test main with altered data file
     
     Ntree<Game> myTree;
     for(Game game : games) {
-        game.convertGenres();
         for(string genre : game.genreList) {
             myTree.insertUnder(game.name, game, genre);
         }
     }
 
-    //test game names
-    // cout << "Number of Games: " << games.size() << endl;
-    // cout << "First 5 Games:" << endl;
-    // cout << games[0].short_description << endl;
-
-
-    // test rankings
-    // int numlines = 0;
-    //  for (int i = 0; i < games.size(); i++) {
-    //      if (games[i].rank_info.size() != 0) {
-    //          for (int j = 0; j < games[i].rank_info.size(); j++) {
-    //              cout << "Name: " << games[i].name << " || Rank Info: " << games[i].rank_info[j][2] << " in " << games[i].rank_info[j][1] << " for " << games[i].rank_info[j][0] << endl;
-    //              numlines++;
-    //          }
-    //      }
-    //  }
-    // cout << numlines << endl;
-
-    //test reviews
-    // for (int i = 0; i < 5; i++) {
-    //     for (int j = 0; j < games[i].reviews.size(); j++) {
-    //         cout << "Game Name: " << games[i].name << ", Review: " << games[i].reviews[j] << endl;
-    //     }
-    // }
-
-    //genre test
-//     cout << games[0].genres << endl;
-//     for (string genre : games[0].genreList) {
-//         cout << genre << endl;
-//     }
     return 0;
 }

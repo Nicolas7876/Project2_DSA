@@ -259,15 +259,15 @@ private:
         printHelper(root->left, space);
     }
 
-    Node<T>* findHelper(Node<T>* node, std::string value) {
+    Node<T>* findHelper(Node<T>* node, std::string key) {
         if(node != nullptr) {
-            if(node->data == value) {
+            if(node->data == key) {
                 return node;
             }
             else {
-                Node<T>* foundNode = findHelper(node->left, value);
+                Node<T>* foundNode = findHelper(node->left, key);
                 if(foundNode == nullptr) {
-                    foundNode = findHelper(node->right, value);
+                    foundNode = findHelper(node->right, key);
                 }
                 return foundNode;
             }
@@ -341,8 +341,8 @@ public:
         printHelper(root, 0);
     }
 
-    Node<T>* findNode(T value) {
-        return findHelper(root, value);
+    Node<T>* findNode(std::string key) {
+        return findHelper(root, key);
     }
 
     bool isEmpty() {
