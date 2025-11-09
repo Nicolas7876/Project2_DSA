@@ -16,6 +16,8 @@
 
 #include <iostream>
 #include <string>
+#include <queue>
+#include <vector>
 
 enum Color { RED, BLACK };
 
@@ -351,4 +353,11 @@ public:
         }
         return false;
     };
+
+    std::vector<T>& iterate(std::vector<T>& myVector, Node<T>* node) {
+        myVector.push_back(node->value);
+        iterate(myVector, node->left);
+        iterate(myVector, node->right);
+        return myVector;
+    }
 };

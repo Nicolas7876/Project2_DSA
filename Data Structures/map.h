@@ -35,4 +35,10 @@ class Map {
             return tree.findNode(key)->value;
         }
     }
+
+    vector<Value> createList() {
+        vector<Value> myVector;
+        tree.iterate(myVector, tree.root);
+        return myVector;
+    }
 };
